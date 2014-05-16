@@ -29,8 +29,7 @@ class LinterJavac extends Linter
 
   createMessage: (match) ->
     # message might be empty, we have to supply a value
-    if match and match.type == 'parse' and not match.message
-      message = 'parse error'
+    
     super(match)
 
 module.exports = LinterJavac
