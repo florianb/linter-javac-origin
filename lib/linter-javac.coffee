@@ -10,7 +10,6 @@ class LinterJavac extends Linter
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
   cmd: 'javac -Xlint:all'
-  #cmd: 'php -l -n -d display_errors=On -d log_errors=Off'
 
   executablePath: null
 

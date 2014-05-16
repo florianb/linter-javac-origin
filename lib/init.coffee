@@ -1,6 +1,6 @@
 module.exports =
   configDefaults:
-    phpExecutablePath: null
+    javaExecutablePath: null
 
   activate: ->
     console.log 'activate linter-javac'
