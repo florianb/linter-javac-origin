@@ -5,18 +5,20 @@ class LinterJavac extends Linter
   # The syntax that the linter handles. May be a string or
   # list/tuple of strings. Names should be all lowercase.
   # TODO: add other java-sources, too
-  @syntax: ['source.java']
+  @syntax: 'source.java'
 
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
   cmd: 'javac -Xlint:all'
 
-  executablePath: null
-
   linterName: 'javac'
 
   # A regex pattern used to extract information from the executable's output.
-  regex: '(?<line>\d+): (?<error>error): (?<message>.+)\n.+\n(?<near>[\^\s]+)'
+  regex: '.+\java:(?<line>\\d+): ' +
+    '(?<error>error): (?<message>.+)\\n.+\\n(?<near>[^ ]+)'
+
+  #regex: '' +
+  #  '(?<error>error)'
 
   constructor: (editor) ->
     super(editor)
@@ -27,10 +29,12 @@ class LinterJavac extends Linter
   destroy: ->
     atom.config.unobserve 'linter-javac.javaExecutablePath'
 
-  createMessage: (match) ->
-    # message might be empty, we have to supply a value
-    if match and match.type == 'parse' and not match.message
-      message = 'parse error'
-    super(match)
+  lintFile: (filePath, callback) ->
+    console.log 'linter: run javac-linter command'
+    # console.log @getCmd(filePath)
+    # console.log @cwd
+    exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
+      if stderr
+        @processMessage(stderr, callback)
 
 module.exports = LinterJavac
