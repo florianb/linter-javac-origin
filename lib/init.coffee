@@ -3,4 +3,4 @@ module.exports =
     phpExecutablePath: null
 
   activate: ->
-    console.log 'activate linter-php'
+    console.log 'activate linter-javac'

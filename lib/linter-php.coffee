@@ -1,18 +1,20 @@
 linterPath = atom.packages.getLoadedPackage("linter").path
 Linter = require "#{linterPath}/lib/linter"
 
-class LinterPhp extends Linter
+class LinterJavac extends Linter
   # The syntax that the linter handles. May be a string or
   # list/tuple of strings. Names should be all lowercase.
-  @syntax: ['text.html.php', 'source.php']
+  # TODO: add other java-sources, too
+  @syntax: ['source.java']
 
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
-  cmd: 'php -l -n -d display_errors=On -d log_errors=Off'
+  cmd: 'javac -Xlint:all'
+  #cmd: 'php -l -n -d display_errors=On -d log_errors=Off'
 
   executablePath: null
 
-  linterName: 'php'
+  linterName: 'javac'
 
   # A regex pattern used to extract information from the executable's output.
   regex: '(Parse|Fatal) (?<error>error):(\\s*(?<type>parse|syntax) error,?)?\\s*' +
@@ -22,11 +24,11 @@ class LinterPhp extends Linter
   constructor: (editor) ->
     super(editor)
 
-    atom.config.observe 'linter-php.phpExecutablePath', =>
-      @executablePath = atom.config.get 'linter-php.phpExecutablePath'
+    atom.config.observe 'linter-javac.javaExecutablePath', =>
+      @executablePath = atom.config.get 'linter-javac.javaExecutablePath'
 
   destroy: ->
-    atom.config.unobserve 'linter-php.phpExecutablePath'
+    atom.config.unobserve 'linter-javac.javaExecutablePath'
 
   createMessage: (match) ->
     # message might be empty, we have to supply a value
@@ -34,4 +36,4 @@ class LinterPhp extends Linter
       message = 'parse error'
     super(match)
 
-module.exports = LinterPhp
+module.exports = LinterJavac
