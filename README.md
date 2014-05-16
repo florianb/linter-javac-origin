@@ -1,19 +1,19 @@
-# linter-php
+# linter-javac
 =========================
 
-This package will lint your `.php` opened filed in Atom through [php -l](http://www.php.net/manual/en/features.commandline.options.php).
+This package will lint your `.java` opened files in Atom through [javac](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javac.html).
 
 ## Installation
 
-* Install [php](http://php.net).
+* Install [java](http://www.java.com/).
 * `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).
-* `$ apm install linter-php`
+* `$ apm install linter-javac`
 
 ## Settings
-You can configure linter-phpcs by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+You can configure linter-javac by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
 ```
-'linter-phpcs':
-  'phpExecutablePath': null # php path. run 'which php' to find the path
+'linter-javacs':
+  'javaExecutablePath': null # java path. run 'which javac' to find the path
 ```
 ## Other available linters
 - [linter-phpcs](https://atom.io/packages/linter-phpcs) - Linter plugin for PHP, using phpcs.
