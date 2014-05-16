@@ -1,10 +1,11 @@
+{exec, child} = require 'child_process'
 linterPath = atom.packages.getLoadedPackage("linter").path
 Linter = require "#{linterPath}/lib/linter"
 
 class LinterJavac extends Linter
   # The syntax that the linter handles. May be a string or
   # list/tuple of strings. Names should be all lowercase.
-  # TODO: add other java-sources, too
+  # TODO: research if there are other java resources must be added
   @syntax: 'source.java'
 
   # A string, list, tuple or callable that returns a string, list or tuple,
@@ -14,11 +15,7 @@ class LinterJavac extends Linter
   linterName: 'javac'
 
   # A regex pattern used to extract information from the executable's output.
-  regex: '.+\java:(?<line>\\d+): ' +
-    '(?<error>error): (?<message>.+)\\n.+\\n(?<near>[^ ]+)'
-
-  #regex: '' +
-  #  '(?<error>error)'
+  regex: 'java:(?<line>\\d+): (?<error>error): (?<message>.+)\\n'
 
   constructor: (editor) ->
     super(editor)
@@ -31,10 +28,8 @@ class LinterJavac extends Linter
 
   lintFile: (filePath, callback) ->
     console.log 'linter: run javac-linter command'
-    # console.log @getCmd(filePath)
-    # console.log @cwd
     exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
-      if stderr
+      if stderr # hell yeah - javac spits its error-messages to the stderr.. >:)
         @processMessage(stderr, callback)
 
 module.exports = LinterJavac
